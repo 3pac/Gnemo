@@ -1,0 +1,30 @@
+[Anjuta]
+Maximized=1
+Geometry=1440x824+0+24
+
+[Project Manager]
+Shortcut=Gnemo//src//gnemo
+Expand=gnemo%%%Gnemo
+
+[File Loader]
+Files=../../src/main.c#42%%%../../src/gnemo.h#45%%%../../src/gnemo.c#25
+
+[Document Manager]
+bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
+[Execution]
+Program uri=../../Debug/src/gnemo
+Run in terminal=2
+Working directories=../../../Gnemo
+
+[Build]
+Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized
+Selected Configuration=Debug
+BuildArgs/Default=--enable-maintainer-mode
+BuildArgs/Debug=--enable-maintainer-mode 'CFLAGS=-g -O0' 'CXXFLAGS=-g -O0' 'JFLAGS=-g -O0' 'FFLAGS=-g -O0'
+BuildArgs/Profiling=--enable-maintainer-mode 'CFLAGS=-g -pg' 'CXXFLAGS=-g -pg' 'JFLAGS=-g -pg' 'FFLAGS=-g -pg'
+BuildArgs/Optimized=--enable-maintainer-mode 'CFLAGS=-O2' 'CXXFLAGS=-O2' 'JFLAGS=-O2' 'FFLAGS=-O2'
+
+[Debugger]
+Watch=\smainWindow
+Stop at beginning=2
