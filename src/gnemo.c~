@@ -26,13 +26,18 @@ void gnemoInit ()
 {
 	mw.init = mainWindowInit;
 	mw.cw.init = closeWindowInit;
+	mw.ds.clearSurface = clearSurface;
 }
 
 //==================Drawing Surface===================//
-static void clearSurface (GtkWidget *widget, gpointer data)
+static void clearSurface (void)
 {
-	//cairo_t cr;
-	//cr = cairo_create ()
+	cairo_t *cr;
+	cr = cairo_create (mw.ds.surface);
+	
+	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_paint (cr);
+	cairo_destroy (cr);
 }
 
 
@@ -74,7 +79,7 @@ void mainWindowInit (void)
 	gtk_container_add (GTK_CONTAINER (mw.window), mw.grid);
 
 	g_signal_connect (mw.window, "delete-event", G_CALLBACK (mw.cw.init), NULL);
-	g_signal_connect (mw.winodw, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+	g_signal_connect (mw.window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
 	gtk_widget_show_all (mw.window);
 }

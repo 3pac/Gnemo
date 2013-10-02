@@ -28,38 +28,19 @@ void gnemoInit ()
 	mw.cw.init = closeWindowInit;
 }
 
-//==================Drawing Surface===================//
-static void clearSurface (GtkWidget *widget, gpointer data)
-{
-	//cairo_t cr;
-	//cr = cairo_create ()
-}
-
-
 //====================Close Window====================//
-static gboolean closeWindowInit (GtkWidget *widget, gpointer data)
+gboolean closeWindowInit (GtkWidget *widget, gpointer data)
 {
-	mw.cw.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title (GTK_WINDOW (mw.cw.window), "Close Window");
-	gtk_container_set_border_width (GTK_CONTAINER (mw.cw.window), 10);
-
-	mw.cw.grid = gtk_grid_new ();
-	gtk_container_add (GTK_CONTAINER (mw.cw.window), mw.cw.grid);
-
-	mw.cw.label = gtk_label_new ("Are You Sure You Want To Quit?");
-	gtk_grid_attach (GTK_GRID (mw.cw.grid), mw.cw.label, 0, 0, 2, 1);
+	mw.cw.window = gtk_message_dialog_new (GTK_WINDOW (mw.window), GTK_DIALOG_DESTROY_WITH_PARENT,
+											GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO,
+											"Are you sure you would like to quit?");
+	gint ret = gtk_dialog_run (GTK_DIALOG (mw.cw.window));
+	gtk_widget_destroy (mw.cw.window);
 	
-	mw.cw.button = gtk_button_new_with_label ("No");
-	g_signal_connect_swapped (mw.cw.button, "clicked", G_CALLBACK (gtk_widget_destroy), mw.cw.window);
-	gtk_grid_attach (GTK_GRID (mw.cw.grid), mw.cw.button, 0, 1, 1, 1);
-
-	mw.cw.button = gtk_button_new_with_label ("Yes");
-	g_signal_connect_swapped (mw.cw.button, "clicked", G_CALLBACK (gtk_widget_destroy), mw.window);
-	gtk_grid_attach (GTK_GRID (mw.cw.grid), mw.cw.button, 1, 1, 1, 1);
-
-	gtk_widget_show_all (mw.cw.window);
-
-	return TRUE;
+	if (ret == GTK_RESPONSE_YES)
+		return FALSE;
+	else
+		return TRUE;
 }
 
 //====================Main Window====================//
@@ -70,9 +51,20 @@ void mainWindowInit (void)
 	gtk_window_set_title (GTK_WINDOW (mw.window), "Hello World!\n");
 	gtk_container_set_border_width (GTK_CONTAINER (mw.window), 10);
 
-	mw.grid = gtk_grid_new ();
-	gtk_container_add (GTK_CONTAINER (mw.window), mw.grid);
+	mw.overallPaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+	mw.leftPaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+	mw.rightPaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
 
+	gtk_paned_set_position (GTK_PANED (mw.overallPaned), 50);
+	gtk_paned_set_position (GTK_PANED (mw.leftPaned), 50);
+	gtk_paned_set_position (GTK_PANED (mw.rightPaned), 50);
+	
+	gtk_paned_pack1 (GTK_PANED (mw.overallPaned), mw.leftPaned, TRUE, TRUE);
+	gtk_widget_set_size_request (mw.leftPaned, 50, -1);
+	gtk_paned_pack2 (GTK_PANED (mw.overallPaned), mw.rightPaned, TRUE, TRUE);
+	gtk_widget_set_size_request (mw.rightPaned, 50, -1);
+	gtk_container_add (GTK_CONTAINER (mw.window), mw.overallPaned);
+	
 	g_signal_connect (mw.window, "delete-event", G_CALLBACK (mw.cw.init), NULL);
 	g_signal_connect (mw.window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 

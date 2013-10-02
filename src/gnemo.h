@@ -22,36 +22,37 @@
 
 #include <gtk/gtk.h>
 
-struct DRAWINGSURFACE;
 struct CLOSEWINDOW;
 struct MAINWINDOW;
 
-typedef struct
-{
-	cairo_surface_t *surface;
-} DRAWINGSURFACE;
-
 typedef struct 
 {
-	GtkWidget *grid;
-	GtkWidget *label;
-	GtkWidget *button;
-	GtkWidget *window;
-	gboolean (*init) (GtkWidget*, gpointer);
+	GtkWidget 			*button;
+	GtkWidget 			*grid;
+	GtkWidget 			*label;
+	GtkWidget 			*window;
+	GtkWindowPosition 	windowPos;
+	
+	gboolean 			(*init) 				(GtkWidget*, gpointer);
 } CLOSEWINDOW;
 
 typedef struct 
 {
-	GtkWidget *grid;
-	GtkWidget *button;
-	GtkWidget *window;
-	GtkWidget *textEditor;
-	void (*init) (void);
-	CLOSEWINDOW cw;
+	
+	GtkWidget 			*button;
+	GtkWidget 			*overallPaned;
+	GtkWidget 			*leftPaned;
+	GtkWidget 			*rightPaned;
+	GtkWidget 			*tabs;
+	GtkWidget 			*window;
+	
+	void 				(*init) 				(void);
+	
+	CLOSEWINDOW 		cw;
 } MAINWINDOW;
 
-void gnemoInit (void);
-void mainWindowInit (void);
-static gboolean closeWindowInit (GtkWidget*, gpointer);
+void 			gnemoInit 				(void);
+void 			mainWindowInit 			(void);
+gboolean		closeWindowInit 		(GtkWidget*, gpointer);
 
 #endif

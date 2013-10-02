@@ -28,7 +28,9 @@ struct MAINWINDOW;
 
 typedef struct
 {
-	cairo_surface_t surface;
+	cairo_surface_t *surface;
+	
+	void (*clearSurface) (void);
 } DRAWINGSURFACE;
 
 typedef struct 
@@ -37,6 +39,7 @@ typedef struct
 	GtkWidget *label;
 	GtkWidget *button;
 	GtkWidget *window;
+	
 	gboolean (*init) (GtkWidget*, gpointer);
 } CLOSEWINDOW;
 
@@ -46,12 +49,17 @@ typedef struct
 	GtkWidget *button;
 	GtkWidget *window;
 	GtkWidget *textEditor;
+	
 	void (*init) (void);
+	
 	CLOSEWINDOW cw;
+	DRAWINGSURFACE ds;
 } MAINWINDOW;
 
 void gnemoInit (void);
 void mainWindowInit (void);
+void clearSurface (void);
+static gboolean configureEventCB (GtkWidget *, GdkEventConfigure*, gpointer);
 static gboolean closeWindowInit (GtkWidget*, gpointer);
 
 #endif
