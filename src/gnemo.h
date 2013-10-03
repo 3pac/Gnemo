@@ -27,9 +27,6 @@ struct MAINWINDOW;
 
 typedef struct 
 {
-	GtkWidget 			*button;
-	GtkWidget 			*grid;
-	GtkWidget 			*label;
 	GtkWidget 			*window;
 	GtkWindowPosition 	windowPos;
 	
@@ -38,21 +35,24 @@ typedef struct
 
 typedef struct 
 {
-	
+	int					tabCount;
 	GtkWidget 			*button;
+	GtkWidget 			*notebook;
 	GtkWidget 			*overallPaned;
 	GtkWidget 			*leftPaned;
 	GtkWidget 			*rightPaned;
 	GtkWidget 			*tabs;
+	GtkWidget 			*textEditor[15];
+	GtkWidget			*grid;
 	GtkWidget 			*window;
 	
 	void 				(*init) 				(void);
-	
+	gint	 			(*newDocument)			(GtkWidget*, gpointer);
 	CLOSEWINDOW 		cw;
 } MAINWINDOW;
 
 void 			gnemoInit 				(void);
 void 			mainWindowInit 			(void);
 gboolean		closeWindowInit 		(GtkWidget*, gpointer);
-
+gint 			newDocument				(GtkWidget*, gpointer);
 #endif
