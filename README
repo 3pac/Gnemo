@@ -1,0 +1,10 @@
+Gnemo is intended to be an editor for your development environment.
+Gnemo is in its extremely early stages of development, looking for developers.
+
+So far the TODO list includes but is not limited to:
+-- Make the source code overall more readable.
+-- Add better documentation to the source. So far there is none.
+-- Add support for syntax highlighting.
+-- Add support for auto completion.
+-- Add support for a build system and debug system.
+-- Add support for plugins.
